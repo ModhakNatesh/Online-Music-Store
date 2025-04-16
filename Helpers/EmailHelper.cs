@@ -8,7 +8,7 @@ namespace OnlineMusicStore.Helpers
     {
         public static void SendOrderConfirmation(string toEmail, string subject, string bodyHtml)
         {
-            var fromAddress = new MailAddress("modhaknatesh@gmail.com", "Online Music Store");
+            var fromAddress = new MailAddress("yourmail@gmail.com", "Online Music Store");
             var toAddress = new MailAddress(toEmail);
             var smtp = new SmtpClient();
 
