@@ -53,12 +53,6 @@ A full-featured music shopping web app built with **ASP.NET MVC 5**, **SQL Serve
 
 ---
 
-## 📂 Screenshots
-
-> Add screenshots later like:
-> ![Home Page](screenshots/home.png)
-
----
 
 ## 🤝 Acknowledgements
 
@@ -72,8 +66,8 @@ Special thanks to:
 
 ## 🪪 License
 
-MIT License © [Your Name]
+MIT License © Modhak G N
 
 ---
 
-**Built with ♥ by [Your Name]**
+**Built with ♥ by Modhak G N**
