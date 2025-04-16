@@ -1,0 +1,157 @@
+﻿@model List<OnlineMusicStore.Models.MusicItem>
+@{
+    ViewBag.Title = "Search Results";
+    var query = ViewBag.Query as string;
+    var genres = ViewBag.Genres as List<string>;
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-light">
+            <h4 class="mb-0">🔍 Music Search</h4>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="query" class="form-label">Keyword</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" id="query" name="query" value="@ViewBag.Query" placeholder="Search..." class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="genre" class="form-label">Genre</label>
+                    <select id="genre" name="genre" class="form-select">
+                        <option value="">All Genres</option>
+                        @foreach (var g in genres)
+                        {
+                            <option value="@g" @(ViewBag.CurrentGenre == g ? "selected" : "")>@g</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="minPrice" class="form-label">Min Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input type="number" id="minPrice" name="minPrice" placeholder="Min" value="@ViewBag.MinPrice" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="maxPrice" class="form-label">Max Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input type="number" id="maxPrice" name="maxPrice" placeholder="Max" value="@ViewBag.MaxPrice" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="sortBy" class="form-label">Sort By</label>
+                    <select id="sortBy" name="sortBy" class="form-select">
+                        <option value="">Sort By</option>
+                        <option value="price_asc" @(ViewBag.SortBy == "price_asc" ? "selected" : "")>Price ↑</option>
+                        <option value="price_desc" @(ViewBag.SortBy == "price_desc" ? "selected" : "")>Price ↓</option>
+                        <option value="date_desc" @(ViewBag.SortBy == "date_desc" ? "selected" : "")>Newest</option>
+                        <option value="popular" @(ViewBag.SortBy == "popular" ? "selected" : "")>Most Voted</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+                <div class="col-auto">
+                    <a href="@Url.Action("Search", "Music")" class="btn btn-outline-secondary">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(query))
+    {
+        <h3 class="mb-3">Search Results for "<span class="text-primary">@query</span>"</h3>
+    }
+    else
+    {
+        <h3 class="mb-3">Browse Music</h3>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            No music items found matching your search. Try a different keyword!
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        @if (!string.IsNullOrEmpty(item.ImageUrl))
+                        {
+                            <img src="@Url.Content(item.ImageUrl)" class="card-img-top" alt="@item.Title" style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <div class="bg-light text-center py-5" style="height: 200px;">
+                                <i class="fas fa-music fa-4x text-muted"></i>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text"><strong>Artist:</strong> @item.Artist</p>
+                            <p class="card-text"><strong>Genre:</strong> <span class="badge bg-secondary">@item.Genre</span></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-primary fs-6">₹@item.Price.ToString("0.00")</span>
+                                @{
+                                    var rating = item.Ratings.Any() ? item.Ratings.Average(r => r.Stars) : 0;
+                                }
+                                <div>
+                                    @if (rating > 0)
+                                    {
+                                        <span>
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= rating)
+                                                {
+                                                    <span style="color: gold;">★</span>
+                                                }
+                                                else
+                                                {
+                                                    <span style="color: lightgray;">☆</span>
+                                                }
+                                            }
+                                            <small>(@item.Ratings.Count)</small>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No ratings</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <div class="d-grid gap-2">
+                                @if (Session["UserId"] != null)
+                                {
+                                    <a href="@Url.Action("AddToCart", "Music", new { id = item.MusicItemId })" class="btn btn-success">
+                                        <i class="fas fa-shopping-cart me-1"></i> Add to Cart
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Account")" class="btn btn-secondary">
+                                        <i class="fas fa-sign-in-alt me-1"></i> Login to Buy
+                                    </a>
+                                }
+                                <a href="@Url.Action("Details", "Music", new { id = item.MusicItemId })" class="btn btn-outline-primary">
+                                    <i class="fas fa-info-circle me-1"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,207 @@
+﻿@model List<OnlineMusicStore.Controllers.CartItem>
+@{
+    ViewBag.Title = "Review and Pay";
+}
+
+<div class="retro-container animate-fade-in">
+    <h2 class="page-title mb-4">
+        <i class="fas fa-receipt me-2"></i> Order Summary
+    </h2>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@item.MusicItem.Title</strong></td>
+                        <td>@item.Quantity</td>
+                        <td>₹@item.MusicItem.Price</td>
+                        <td>₹@(item.MusicItem.Price * item.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="total-container mb-4">
+        <h4 class="order-total">
+            Total: <span class="text-accent">₹@ViewBag.Total</span>
+        </h4>
+    </div>
+
+    <div class="payment-container">
+        <h3 class="section-title mb-4">
+            <i class="fas fa-credit-card me-2"></i> Enter Payment Details
+        </h3>
+
+        @if (TempData["PaymentError"] != null)
+        {
+            <div class="alert alert-danger" style="border: 2px solid var(--dark); box-shadow: 4px 4px 0 var(--dark);">
+                <i class="fas fa-exclamation-circle me-2"></i>@TempData["PaymentError"]
+            </div>
+        }
+
+        @using (Html.BeginForm("Payment", "Music", FormMethod.Post, new { id = "paymentForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-credit-card me-2"></i>Card Number
+                        </label>
+                        <input type="text" name="cardNumber" class="form-control payment-input" maxlength="16" required />
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-calendar-alt me-2"></i>Expiry Date
+                        </label>
+                        <input type="text" name="expiry" class="form-control payment-input" placeholder="MM/YY" required />
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-lock me-2"></i>CVV
+                        </label>
+                        <input type="password" name="cvv" class="form-control payment-input" maxlength="3" required />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" id="payButton" class="btn btn-success">
+                    <i class="fas fa-shopping-cart me-2"></i> Pay & Place Order
+                </button>
+                <button type="button" id="loadingButton" class="btn btn-success d-none" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Processing Payment...
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .retro-container {
+        background-color: rgba(255, 255, 255, 0.92);
+        border-radius: 8px;
+        box-shadow: 8px 8px 0 var(--primary);
+        backdrop-filter: blur(5px);
+        border: 2px solid var(--dark);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        color: var(--primary);
+        font-family: 'Rubik Mono One', sans-serif;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 0;
+        }
+
+    .section-title {
+        color: var(--secondary);
+        font-weight: 700;
+        border-bottom: 3px dashed var(--secondary);
+        padding-bottom: 10px;
+        display: inline-block;
+    }
+
+    .order-total {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        color: var(--dark);
+        background-color: rgba(var(--accent), 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 5px solid var(--accent);
+        display: inline-block;
+    }
+
+    .text-accent {
+        color: var(--primary);
+        font-family: 'VT323', monospace;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .table {
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .table thead {
+            background-color: var(--dark);
+            color: white;
+        }
+
+    .table-dark {
+        background-color: var(--dark) !important;
+    }
+
+    .payment-container {
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px dashed var(--secondary);
+    }
+
+    .payment-input {
+        border: 2px solid var(--dark) !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .btn-success {
+        background: var(--secondary);
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 0 var(--dark);
+        color: var(--dark);
+    }
+
+        .btn-success:hover {
+            background: var(--secondary);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--dark);
+        }
+</style>
+
+<script>
+    document.getElementById('paymentForm').addEventListener('submit', function (e) {
+        // Show loading button, hide submit button
+        document.getElementById('payButton').classList.add('d-none');
+        document.getElementById('loadingButton').classList.remove('d-none');
+        // Form will submit normally
+        // No need to call e.preventDefault() as we want the form to submit
+    });
+</script>

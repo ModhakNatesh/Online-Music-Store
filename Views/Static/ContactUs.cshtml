@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+}
+
+<div class="container retro-container">
+    <h2 class="page-title mb-4">Contact Us</h2>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="contact-info p-4 border-2 border-dark bg-white" style="box-shadow: 8px 8px 0px var(--primary);">
+                <h3 class="mb-4">Get in Touch</h3>
+                <p class="lead mb-4">Have questions about your order, need music recommendations, or want to collaborate? We'd love to hear from you!</p>
+
+                <div class="contact-methods">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3 d-flex align-items-center justify-content-center"
+                             style="width: 50px; height: 50px; background-color: var(--secondary); border-radius: 50%; color: var(--dark);">
+                            <i class="fas fa-map-marker-alt fa-lg"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Our Location</h5>
+                            <p class="mb-0">123 Music Avenue, Vinyl District</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="contact-icon me-3 d-flex align-items-center justify-content-center"
+                             style="width: 50px; height: 50px; background-color: var(--retro-pink); border-radius: 50%; color: var(--dark);">
+                            <i class="fas fa-phone fa-lg"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Phone Number</h5>
+                            <p class="mb-0">(555) 123-4567</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <div class="contact-icon me-3 d-flex align-items-center justify-content-center"
+                             style="width: 50px; height: 50px; background-color: var(--accent); border-radius: 50%; color: var(--dark);">
+                            <i class="fas fa-envelope fa-lg"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">Email Address</h5>
+                            <p class="mb-0">help@melodify.com</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-links mt-5">
+                    <h5 class="mb-3">Follow Us</h5>
+                    <div class="d-flex">
+                        <a href="https://github.com/ModhakNatesh" class="me-3 d-flex align-items-center justify-content-center"
+                           style="width: 40px; height: 40px; background-color: var(--retro-blue); border-radius: 50%; color: var(--dark);">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://github.com/ModhakNatesh" class="me-3 d-flex align-items-center justify-content-center"
+                           style="width: 40px; height: 40px; background-color: var(--retro-blue); border-radius: 50%; color: var(--dark);">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://github.com/ModhakNatesh" class="me-3 d-flex align-items-center justify-content-center"
+                           style="width: 40px; height: 40px; background-color: var(--retro-blue); border-radius: 50%; color: var(--dark);">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/ModhakNatesh" class="d-flex align-items-center justify-content-center"
+                           style="width: 40px; height: 40px; background-color: var(--retro-blue); border-radius: 50%; color: var(--dark);">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="contact-form p-4 border-2 border-dark bg-white" style="box-shadow: 8px 8px 0px var(--primary);">
+                <h3 class="mb-4">Send a Message</h3>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert"
+                         style="border: 2px solid var(--dark); background-color: var(--secondary); color: var(--dark); box-shadow: 4px 4px 0px var(--dark);">
+                        <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                         style="border: 2px solid var(--dark); background-color: var(--primary); color: white; box-shadow: 4px 4px 0px var(--dark);">
+                        <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <form method="post" action="/Static/ContactUs" id="contactForm">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label for="Name" class="form-label fw-bold">
+                            <i class="fas fa-user me-2"></i>Name
+                        </label>
+                        <input type="text" class="form-control" id="Name" name="Name" required
+                               style="border: 2px solid var(--dark); border-radius: 8px; padding: 10px 15px;">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Email" class="form-label fw-bold">
+                            <i class="fas fa-envelope me-2"></i>Email
+                        </label>
+                        <input type="email" class="form-control" id="Email" name="Email" required
+                               style="border: 2px solid var(--dark); border-radius: 8px; padding: 10px 15px;">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Message" class="form-label fw-bold">
+                            <i class="fas fa-comment-alt me-2"></i>Message
+                        </label>
+                        <textarea class="form-control" id="Message" name="Message" rows="5" required
+                                  style="border: 2px solid var(--dark); border-radius: 8px; padding: 10px 15px;"></textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary btn-lg" style="border: 2px solid var(--dark); box-shadow: 4px 4px 0px var(--dark);">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

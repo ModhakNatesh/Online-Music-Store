@@ -1,0 +1,301 @@
+﻿@model List<OnlineMusicStore.Controllers.CartItem>
+@{
+    ViewBag.Title = "Your Cart";
+    bool hasStockIssue = false;
+}
+
+<div class="retro-container animate-fade-in">
+    <h2 class="page-title mb-4">
+        <i class="fas fa-shopping-cart me-2"></i> Your Shopping Cart
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-cart text-center py-5">
+            <i class="fas fa-shopping-cart fa-5x mb-3" style="color: var(--secondary); opacity: 0.5;"></i>
+            <h3 class="mb-4">Your cart is empty</h3>
+            <a href="@Url.Action("Index", "Music")" class="btn btn-primary">
+                <i class="fas fa-music me-2"></i> Browse Music Collection
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive mb-4">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Rating</th>
+                        <th>Stock Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        bool isStockSufficient = item.Quantity <= item.MusicItem.Stock;
+                        if (!isStockSufficient) { hasStockIssue = true; }
+                        <tr class="@(!isStockSufficient ? "stock-warning" : "")">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if (!string.IsNullOrEmpty(item.MusicItem.ImageUrl))
+                                    {
+                                        <img src="@item.MusicItem.ImageUrl" class="cart-img me-3" alt="@item.MusicItem.Title">
+                                    }
+                                    else
+                                    {
+                                        <img src="/Content/Images/album-placeholder.jpg" class="cart-img me-3" alt="@item.MusicItem.Title">
+                                    }
+                                    <span class="fw-bold">@item.MusicItem.Title</span>
+                                </div>
+                            </td>
+                            <td>@item.Quantity</td>
+                            <td>₹@item.MusicItem.Price</td>
+                            <td>₹@(item.MusicItem.Price * item.Quantity)</td>
+                            <td>
+                                @{
+                                    var rating = item.MusicItem.Ratings.Any() ? item.MusicItem.Ratings.Average(r => r.Stars) : 0;
+                                }
+                                @if (rating > 0)
+                                {
+                                    <div class="rating">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= rating)
+                                            {
+                                                <i class="fas fa-star"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="far fa-star"></i>
+                                            }
+                                        }
+                                        <small class="ms-1">(@item.MusicItem.Ratings.Count)</small>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @if (isStockSufficient)
+                                {
+                                    <span class="stock-badge in-stock">
+                                        <i class="fas fa-check-circle me-1"></i> In Stock
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="stock-badge out-of-stock">
+                                        <i class="fas fa-exclamation-triangle me-1"></i> Only @item.MusicItem.Stock available
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("RemoveFromCart", new { id = item.MusicItem.MusicItemId })" class="btn btn-remove">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cart-footer">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="cart-total">
+                    <h4>Total: <span class="text-accent">₹@Model.Sum(i => i.MusicItem.Price * i.Quantity)</span></h4>
+                </div>
+                <div class="cart-actions">
+                    <a href="@Url.Action("Index", "Music")" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-arrow-left me-1"></i> Continue Shopping
+                    </a>
+                    @if (hasStockIssue)
+                    {
+                        <button class="btn btn-primary disabled" disabled>
+                            <i class="fas fa-lock me-1"></i> Checkout
+                        </button>
+                        <div class="alert alert-warning mt-3" style="border: 2px solid var(--dark); box-shadow: 4px 4px 0 var(--dark);">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Note:</strong> Some items in your cart have insufficient stock. Please remove these items or adjust quantities before proceeding.
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Buy", "Music")" class="btn btn-primary">
+                            <i class="fas fa-credit-card me-1"></i> Proceed to Checkout
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .retro-container {
+        background-color: rgba(255, 255, 255, 0.92);
+        border-radius: 8px;
+        box-shadow: 8px 8px 0 var(--primary);
+        backdrop-filter: blur(5px);
+        border: 2px solid var(--dark);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        color: var(--primary);
+        font-family: 'Rubik Mono One', sans-serif;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 0;
+        }
+
+    .table {
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .table thead {
+            background-color: var(--dark);
+            color: white;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+    .table-dark {
+        background-color: var(--dark) !important;
+    }
+
+    .cart-img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid var(--dark);
+    }
+
+    .stock-badge {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .in-stock {
+        background-color: rgba(78, 205, 196, 0.2);
+        color: var(--secondary);
+        border: 1px solid var(--secondary);
+    }
+
+    .out-of-stock {
+        background-color: rgba(255, 107, 107, 0.2);
+        color: var(--primary);
+        border: 1px solid var(--primary);
+    }
+
+    .btn-remove {
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--dark);
+        transition: all 0.3s ease;
+    }
+
+        .btn-remove:hover {
+            background-color: darkred;
+            color: white;
+            transform: scale(1.1);
+        }
+
+    .stock-warning {
+        background-color: rgba(255, 107, 107, 0.1);
+    }
+
+    .cart-footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px dashed var(--dark);
+    }
+
+    .cart-total {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 15px 20px;
+        border-radius: 8px;
+        border: 2px solid var(--dark);
+        box-shadow: 4px 4px 0 var(--secondary);
+    }
+
+    .text-accent {
+        color: var(--primary);
+        font-family: 'VT323', monospace;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 0 var(--dark);
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--dark);
+        }
+
+    .btn-outline-primary {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .rating .fas.fa-star {
+        color: var(--accent);
+    }
+
+    .rating .far.fa-star {
+        color: #d1d1d1;
+    }
+
+    .empty-cart {
+        padding: 40px 0;
+    }
+</style>

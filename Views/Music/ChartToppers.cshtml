@@ -1,0 +1,146 @@
+﻿@model List<OnlineMusicStore.Models.ViewModels.ChartTopperViewModel>
+@{
+    ViewBag.Title = "Chart Toppers";
+    var votedList = ViewBag.Voted as List<int>;
+}
+
+<div class="animate-fade-in">
+    <div class="retro-container mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="page-title">
+                    <i class="fas fa-chart-line me-2"></i> Chart Toppers
+                </h2>
+                <p class="lead">The most popular music voted by our community. Vote for your favorites!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="retro-container">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th><i class="fas fa-music me-2"></i>Title</th>
+                        <th><i class="fas fa-user me-2"></i>Artist</th>
+                        <th><i class="fas fa-tag me-2"></i>Genre</th>
+                        <th><i class="fas fa-star me-2"></i>Rating</th>
+                        <th><i class="fas fa-poll me-2"></i>Votes</th>
+                        <th><i class="fas fa-heart me-2"></i>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var song in Model)
+                    {
+                        <tr>
+                            <td class="fw-bold">@song.MusicItem.Title</td>
+                            <td>@song.MusicItem.Artist</td>
+                            <td><span class="badge bg-secondary">@song.MusicItem.Genre</span></td>
+                            <td>
+                                @{
+                                    var rating = song.MusicItem.Ratings.Any() ? song.MusicItem.Ratings.Average(r => r.Stars) : 0;
+                                }
+                                <div class="rating">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= rating)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                    <small class="text-muted ms-2">(@song.MusicItem.Ratings.Count)</small>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge" style="background-color: var(--accent); color: var(--dark); font-size: 1rem;">
+                                    @song.VoteCount
+                                </span>
+                            </td>
+                            <td>
+                                @if (Session["UserId"] != null)
+                                {
+                                    if (votedList.Contains(song.MusicItem.MusicItemId))
+                                    {
+                                        <span class="text-success">
+                                            <i class="fas fa-check-circle me-1"></i> Voted
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <form action="/Music/Vote" method="post" style="display:inline;">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@song.MusicItem.MusicItemId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-thumbs-up me-1"></i> Vote
+                                            </button>
+                                        </form>
+                                    }
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary">
+                                        <i class="fas fa-lock me-1"></i> Login to Vote
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="retro-container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <h4 class="mb-3">
+                    <i class="fas fa-music me-2"></i> Want to support your favorite artists?
+                </h4>
+                <p class="mb-4">Login or create an account to vote for your favorite music and help them reach the top of our charts!</p>
+            </div>
+            <div class="col-md-4 text-md-end">
+                @if (Session["UserId"] == null)
+                {
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-primary me-2">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
+                    </a>
+                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary">
+                        <i class="fas fa-user-plus me-1"></i> Register
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table th {
+        background-color: var(--dark);
+        color: var(--light);
+        border-color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 15px 10px;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .table tr:hover {
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .badge {
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+</style>

@@ -1,0 +1,124 @@
+﻿@model OnlineMusicStore.Models.MusicItem
+@{
+    ViewBag.Title = "Edit Music";
+}
+
+<div class="retro-container">
+    <h2 class="page-title mb-4">Edit Music Item</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="text-center">
+                    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded" style="max-height: 200px; box-shadow: 5px 5px 0px var(--primary);">
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-4 bg-light rounded" style="border: 2px dashed var(--text-muted);">
+                    <i class="fas fa-compact-disc fa-4x text-muted"></i>
+                    <p class="mt-2">No image available</p>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-9">
+            @using (Html.BeginForm("EditMusic", "Admin", FormMethod.Post, new { id = "editMusicForm", @class = "row g-3" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.MusicItemId)
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Title, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter title" })
+                        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Artist, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.Artist, new { @class = "form-control", placeholder = "Enter artist name" })
+                        @Html.ValidationMessageFor(m => m.Artist, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Genre, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.Genre, new { @class = "form-control", placeholder = "Enter genre" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.ReleaseDate, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.ReleaseDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Price, new { @class = "form-label fw-bold" })
+                        <div class="input-group">
+                            <span class="input-group-text">₹</span>
+                            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", placeholder = "0.00" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Stock, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control", type = "number", min = "0", placeholder = "0" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.ImageUrl, new { @class = "form-label fw-bold" })
+                        @Html.TextBoxFor(m => m.ImageUrl, new { @class = "form-control", placeholder = "Enter image URL" })
+                    </div>
+                </div>
+
+                <div class="col-12 mt-4">
+                    <div class="d-flex align-items-center">
+                        <button type="submit" id="editSubmitBtn" class="btn btn-primary me-2">
+                            <span class="button-text"><i class="fas fa-save me-2"></i>Update Music Item</span>
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        </button>
+                        @Html.ActionLink("Back to Inventory", "MusicItems", "Admin", null, new { @class = "btn btn-outline-primary" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to handle form submission with loading indicator
+        function setupFormLoading(formId, buttonId) {
+            const form = document.getElementById(formId);
+            const button = document.getElementById(buttonId);
+            if (form && button) {
+                form.addEventListener('submit', function () {
+                    // Show spinner and disable button
+                    const buttonText = button.querySelector('.button-text');
+                    const spinner = button.querySelector('.spinner-border');
+                    if (buttonText && spinner) {
+                        buttonText.innerHTML = '<i class="fas fa-circle-notch fa-spin me-2"></i>Processing...';
+                        spinner.classList.remove('d-none');
+                    }
+                    button.disabled = true;
+                    // Form will submit normally
+                    return true;
+                });
+            }
+        }
+        setupFormLoading('editMusicForm', 'editSubmitBtn');
+    });
+</script>

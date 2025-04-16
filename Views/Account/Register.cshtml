@@ -1,0 +1,169 @@
+﻿@model OnlineMusicStore.Models.User
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="retro-container animate-fade-in">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h2 class="page-title mb-4">
+                <i class="fas fa-user-plus me-2"></i> Join Melodify
+            </h2>
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "register-form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger border-2 border-dark" })
+
+                <div class="retro-card mb-4">
+                    <div class="retro-card-header">
+                        <i class="fas fa-headphones me-2"></i> Create Your Account
+                    </div>
+                    <div class="retro-card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Username, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control border-2 border-dark", placeholder = "Choose a username" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Password, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control border-2 border-dark", placeholder = "Create a password" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.FullName, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control border-2 border-dark", placeholder = "Your full name" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Email, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control border-2 border-dark", placeholder = "Your email address" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.Address, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control border-2 border-dark", rows = "2", placeholder = "Your shipping address" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="mb-3">
+                                    @Html.LabelFor(m => m.CreditCard, new { @class = "form-label fw-bold" })
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                        @Html.TextBoxFor(m => m.CreditCard, new { @class = "form-control border-2 border-dark", placeholder = "Your card number (optional)" })
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.CreditCard, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 mb-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-compact-disc vinyl-animation me-2"></i> Start Rocking With Us
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p>Already have an account? <a href="@Url.Action("Login", "Account")" class="text-primary fw-bold">Log In</a></p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .retro-card {
+        background-color: white;
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        box-shadow: 8px 8px 0 var(--primary);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .retro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 10px 10px 0 var(--primary);
+        }
+
+    .retro-card-header {
+        background-color: var(--dark);
+        color: var(--accent);
+        padding: 15px 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-bottom: 2px solid var(--primary);
+    }
+
+    .retro-card-body {
+        padding: 20px;
+        background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+    }
+
+    .register-form .form-control {
+        padding: 10px 15px;
+        border-radius: 6px;
+        box-shadow: 3px 3px 0px var(--dark);
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+        .register-form .form-control:focus {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px var(--dark);
+            border-color: var(--secondary);
+        }
+
+    .register-form .input-group-text {
+        background-color: var(--secondary);
+        color: var(--dark);
+        border: 2px solid var(--dark);
+        border-right: none;
+        font-weight: 600;
+    }
+
+    .register-form .btn {
+        box-shadow: 5px 5px 0px var(--dark);
+        border: 2px solid var(--dark);
+        transition: all 0.3s ease;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+        .register-form .btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--dark);
+        }
+
+    .text-danger {
+        color: var(--primary) !important;
+        font-weight: 600;
+        margin-top: 5px;
+        display: block;
+    }
+</style>

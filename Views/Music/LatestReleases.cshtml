@@ -1,0 +1,142 @@
+﻿@model List<OnlineMusicStore.Models.MusicItem>
+@{
+    ViewBag.Title = "Latest Releases";
+}
+
+<div class="animate-fade-in">
+    <div class="retro-container mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <h2 class="page-title">
+                    <i class="fas fa-compact-disc vinyl-animation me-2"></i> Latest Releases
+                </h2>
+                <p class="lead">Check out the freshest music added in the last 30 days</p>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="retro-container">
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> No new music released recently. Check back soon for fresh drops!
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="product-card">
+                        <span class="product-badge">NEW</span>
+
+                        <img src="@(item.ImageUrl ?? "/Content/Images/album-placeholder.jpg")" class="card-img-top" alt="@item.Title">
+
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">by @item.Artist</p>
+                            <p><span class="badge" style="background-color: var(--retro-purple);">@item.Genre</span></p>
+                            <p><small class="text-muted">Released: @item.ReleaseDate.ToShortDateString()</small></p>
+
+                            <div class="d-flex align-items-center mb-3">
+                                @{
+                                    var rating = item.Ratings.Any() ? item.Ratings.Average(r => r.Stars) : 0;
+                                }
+                                <div class="rating me-2">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= rating)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="far fa-star"></i>
+                                        }
+                                    }
+                                </div>
+                                <small class="text-muted">(@item.Ratings.Count)</small>
+                            </div>
+
+                            <span class="product-price">₹@item.Price.ToString("0.00")</span>
+
+                            <div class="stock-status mb-3">
+                                @if (item.Stock > 0)
+                                {
+                                    <span class="badge bg-success"><i class="fas fa-check me-1"></i> In Stock</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger"><i class="fas fa-times me-1"></i> Out of Stock</span>
+                                }
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                @if (Session["UserId"] != null)
+                                {
+                                    if (item.Stock > 0)
+                                    {
+                                        <a href="@Url.Action("AddToCart", "Music", new { id = item.MusicItemId })" class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart me-1"></i> Add to Cart
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-secondary" disabled>
+                                            <i class="fas fa-times me-1"></i> Out of Stock
+                                        </button>
+                                    }
+                                    <a href="@Url.Action("Add", "WishList", new { id = item.MusicItemId })" class="btn btn-outline-primary">
+                                        <i class="fas fa-heart me-1"></i> Add to Wishlist
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Login", "Account")" class="btn btn-primary">
+                                        <i class="fas fa-lock me-1"></i> Login to Buy
+                                    </a>
+                                    <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary">
+                                        <i class="fas fa-user-plus me-1"></i> Register
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="retro-container mt-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="mb-3">
+                        <i class="fas fa-headphones-alt me-2"></i> Stay Updated with Fresh Beats
+                    </h4>
+                    <p class="mb-4">Create an account to get notifications when new music drops!</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    @if (Session["UserId"] == null)
+                    {
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i> Join Now
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .stock-status {
+        text-align: center;
+    }
+
+        .stock-status .badge {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+</style>

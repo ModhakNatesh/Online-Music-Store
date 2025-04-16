@@ -1,0 +1,90 @@
+﻿@model OnlineMusicStore.Models.Feedback
+@{
+    ViewBag.Title = "Submit Feedback";
+}
+
+<div class="retro-container animate-fade-in">
+    <h2 class="page-title mb-4">
+        <i class="fas fa-comments me-2"></i> Submit Feedback
+    </h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success" style="border: 2px solid var(--dark); box-shadow: 4px 4px 0 var(--dark);">
+            <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+        </div>
+    }
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "mt-4" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group mb-3">
+            <label for="Message" class="form-label fw-bold">
+                <i class="fas fa-pencil-alt me-2"></i>@Html.LabelFor(m => m.Message)
+            </label>
+            @Html.TextAreaFor(m => m.Message, new { @class = "form-control", rows = 4, style = "border: 2px solid var(--dark); border-radius: 8px; padding: 12px;" })
+        </div>
+        <div class="form-group mb-4">
+            <label for="Rating" class="form-label fw-bold">
+                <i class="fas fa-star me-2"></i>@Html.LabelFor(m => m.Rating)
+            </label>
+            @Html.TextBoxFor(m => m.Rating, new { @class = "form-control", placeholder = "Optional: 1 to 5", style = "border: 2px solid var(--dark); border-radius: 8px; padding: 12px;" })
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-paper-plane me-2"></i>Submit Feedback
+        </button>
+    }
+</div>
+
+<style>
+    .retro-container {
+        background-color: rgba(255, 255, 255, 0.92);
+        border-radius: 8px;
+        box-shadow: 8px 8px 0 var(--primary);
+        backdrop-filter: blur(5px);
+        border: 2px solid var(--dark);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        color: var(--primary);
+        font-family: 'Rubik Mono One', sans-serif;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 0;
+        }
+
+    .btn-primary {
+        background: var(--primary);
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 0 var(--dark);
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--dark);
+        }
+
+    .form-control:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.25);
+    }
+</style>

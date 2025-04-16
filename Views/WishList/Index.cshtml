@@ -1,0 +1,47 @@
+﻿@model List<OnlineMusicStore.Models.WishListItem>
+@{
+    ViewBag.Title = "Your Wish List";
+}
+<h2>Your Wish List</h2>
+@if (!Model.Any())
+{
+    <p>No items in your wish list.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr><th>Title</th><th>Artist</th><th>Stock Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MusicItem.Title</td>
+                    <td>@item.MusicItem.Artist</td>
+                    <td>
+                        @if (item.MusicItem.Stock > 0)
+                        {
+                            <span class="badge bg-success">In Stock</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Out of Stock</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.MusicItem.Stock > 0)
+                        {
+                            @Html.ActionLink("Move to Cart", "MoveToCart", new { id = item.WishListItemId }, new { @class = "btn btn-primary" })
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary" disabled>Out of Stock</button>
+                        }
+                        @Html.ActionLink("Remove", "Remove", new { id = item.WishListItemId }, new { @class = "btn btn-danger ml-2" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

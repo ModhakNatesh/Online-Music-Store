@@ -1,0 +1,177 @@
+﻿@model OnlineMusicStore.Models.Rating
+@{
+    ViewBag.Title = "Rate Music";
+}
+
+<div class="retro-container">
+    <h2 class="page-title">Rate This Music</h2>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header d-flex align-items-center" style="background-color: var(--dark); color: white;">
+                    <i class="fas fa-star me-2 text-warning"></i>
+                    <h5 class="mb-0">Share Your Experience</h5>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.MusicItemId)
+                        @Html.HiddenFor(m => m.UserId)
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-star-half-alt me-2 text-warning"></i>Rating (1-5 stars)
+                            </label>
+                            <div class="rating-selector mb-2">
+                                <div class="btn-group" role="group">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <input type="radio" class="btn-check" name="Stars" id="star@(i)" value="@i" @(Model.Stars == i ? "checked" : "") autocomplete="off" required>
+                                        <label class="btn btn-outline-warning" for="star@(i)">
+                                            @i <i class="fas fa-star"></i>
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Stars, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-comment-alt me-2 text-secondary"></i>Write a Review (optional)
+                            </label>
+                            @Html.TextAreaFor(m => m.Review, new { @class = "form-control", rows = 4, placeholder = "Share your thoughts about this music..." })
+                            @Html.ValidationMessageFor(m => m.Review, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="@Url.Action("OrderHistory", "Music")" class="btn btn-outline-primary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Orders
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Rating
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Rating guidelines card remains unchanged -->
+            <div class="card mt-4">
+                <div class="card-header" style="background-color: var(--dark); color: white;">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>Rating Guidelines</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2">5 <i class="fas fa-star text-warning"></i></span>
+                                <span>Outstanding - Exceptional quality</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2">4 <i class="fas fa-star text-warning"></i></span>
+                                <span>Great - Above average quality</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2">3 <i class="fas fa-star text-warning"></i></span>
+                                <span>Good - Average quality</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2">2 <i class="fas fa-star text-warning"></i></span>
+                                <span>Fair - Below average quality</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="me-2">1 <i class="fas fa-star text-warning"></i></span>
+                                <span>Poor - Significant issues</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ensure a default selection if Model.Stars is not set
+            if (!document.querySelector('.btn-check:checked')) {
+                document.getElementById('star3').checked = true;
+            }
+
+            // Visual feedback for star selection
+            const starLabels = document.querySelectorAll('.btn-outline-warning');
+            const starInputs = document.querySelectorAll('.btn-check');
+
+            // Properly mark active stars based on selection
+            function updateStarDisplay() {
+                starLabels.forEach((label, idx) => {
+                    label.classList.remove('active');
+                });
+
+                const checkedIdx = Array.from(starInputs).findIndex(input => input.checked);
+                if (checkedIdx >= 0) {
+                    for (let i = 0; i <= checkedIdx; i++) {
+                        starLabels[i].classList.add('active');
+                    }
+                }
+            }
+
+            // Initial update
+            updateStarDisplay();
+
+            starLabels.forEach((label, index) => {
+                label.addEventListener('mouseover', () => {
+                    // Highlight current and previous stars on hover
+                    for (let i = 0; i <= index; i++) {
+                        starLabels[i].classList.add('active');
+                    }
+                });
+
+                label.addEventListener('mouseout', () => {
+                    // Remove highlight on mouseout and restore proper state
+                    updateStarDisplay();
+                });
+
+                label.addEventListener('click', () => {
+                    // Update display after clicking
+                    setTimeout(updateStarDisplay, 50);
+                });
+            });
+
+            // Form submission validation
+            document.querySelector('form').addEventListener('submit', function (e) {
+                if (!document.querySelector('input[name="Stars"]:checked')) {
+                    e.preventDefault();
+                    alert('Please select a star rating');
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .btn-outline-warning {
+            color: var(--dark);
+            border-color: var(--accent);
+            background-color: transparent;
+        }
+
+            .btn-outline-warning:hover, .btn-outline-warning.active {
+                background-color: var(--accent);
+                color: var(--dark);
+                border-color: var(--accent);
+            }
+
+        .btn-check:checked + .btn-outline-warning {
+            background-color: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+        }
+    </style>
+}

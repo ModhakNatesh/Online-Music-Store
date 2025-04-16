@@ -1,0 +1,105 @@
+﻿@model List<OnlineMusicStore.Models.Feedback>
+@{
+    ViewBag.Title = "User Feedback";
+}
+
+<div class="retro-container">
+    <h2 class="page-title mb-4">
+        <i class="fas fa-comments me-2 text-primary"></i>
+        User Feedback
+    </h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No feedback has been submitted yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th><i class="fas fa-user me-2"></i>User</th>
+                        <th><i class="fas fa-comment me-2"></i>Message</th>
+                        <th><i class="fas fa-star me-2"></i>Rating</th>
+                        <th><i class="fas fa-calendar me-2"></i>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fb in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="fw-bold">@fb.User.Username</span>
+                            </td>
+                            <td>
+                                <div class="feedback-text">@fb.Message</div>
+                            </td>
+                            <td>
+                                @if (fb.Rating.HasValue)
+                                {
+                                    <div class="rating-stars">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= fb.Rating.Value)
+                                            {
+                                                <i class="fas fa-star text-warning"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="far fa-star text-muted"></i>
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not rated</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">
+                                    <i class="far fa-clock me-1"></i>
+                                    @fb.SubmittedAt.ToShortDateString()
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <div class="alert alert-light border" role="alert">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <i class="fas fa-chart-bar fa-2x text-primary"></i>
+                    </div>
+                    <div>
+                        <h5 class="alert-heading">Feedback Summary</h5>
+                        <p>Total Feedback: <strong>@Model.Count</strong></p>
+                        @{
+                            var avgRating = Model.Where(f => f.Rating.HasValue).Select(f => f.Rating.Value).DefaultIfEmpty(0).Average();
+                        }
+                        <p>Average Rating: <strong>@avgRating.ToString("0.0")</strong> / 5</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .feedback-text {
+        max-width: 400px;
+        white-space: pre-wrap;
+    }
+
+    .rating-stars {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+    }
+</style>

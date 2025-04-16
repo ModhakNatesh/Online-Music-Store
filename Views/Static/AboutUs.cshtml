@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "About Us";
+}
+
+<div class="container retro-container">
+    <h2 class="page-title mb-4">About Us</h2>
+
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="about-content">
+                <h3 class="mb-4">Welcome to <span class="neon-text">Melodify</span> — your retro music destination</h3>
+
+                <p class="lead mb-4">
+                    At Melodify, we're passionate about connecting music lovers with vinyl treasures and digital gems from every era.
+                    Our retro-inspired music store combines nostalgic vibes with modern convenience.
+                </p>
+
+                <div class="features-section mt-5">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="feature-card p-4 border-2 border-dark" style="background-color: var(--secondary); box-shadow: 5px 5px 0px var(--dark);">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-compact-disc fa-2x me-3 vinyl-animation"></i>
+                                    <h4 class="mb-0">Discover Music</h4>
+                                </div>
+                                <p>Explore the latest releases and timeless classics across all genres and formats.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card p-4 border-2 border-dark" style="background-color: var(--retro-pink); box-shadow: 5px 5px 0px var(--dark);">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-heart fa-2x me-3"></i>
+                                    <h4 class="mb-0">Wishlist Favorites</h4>
+                                </div>
+                                <p>Save and organize your musical desires for future purchases or share with friends.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card p-4 border-2 border-dark" style="background-color: var(--accent); box-shadow: 5px 5px 0px var(--dark);">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-shopping-cart fa-2x me-3"></i>
+                                    <h4 class="mb-0">Secure Shopping</h4>
+                                </div>
+                                <p>Enjoy a secure checkout process with instant digital delivery and physical shipping options.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-card p-4 border-2 border-dark" style="background-color: var(--retro-blue); box-shadow: 5px 5px 0px var(--dark);">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-chart-line fa-2x me-3"></i>
+                                    <h4 class="mb-0">Chart Toppers</h4>
+                                </div>
+                                <p>Stay updated with real-time charts and trending music across all genres.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-section mt-5">
+                    <h3 class="mb-4">Our Story</h3>
+                    <p>
+                        Founded by music enthusiasts in 2023, Melodify began as a small record shop with a vision to create
+                        a digital space that captures the magic of digging through vinyl crates while offering the convenience
+                        of modern e-commerce. Our team combines decades of music industry experience with cutting-edge
+                        technology to deliver an unmatched shopping experience.
+                    </p>
+                    <p>
+                        Built with ASP.NET MVC 5 and a whole lot of love for music, we're constantly improving our platform
+                        to help you discover your next favorite album.
+                    </p>
+                </div>
+
+                <div class="cta-section text-center mt-5 mb-3">
+                    <a href="@Url.Action("ContactUs", "Static")" class="btn btn-primary btn-lg">
+                        <i class="fas fa-envelope me-2"></i> Get In Touch
+                    </a>
+                    <a href="@Url.Action("Index", "Music")" class="btn btn-outline-primary btn-lg ms-3">
+                        <i class="fas fa-compact-disc me-2"></i> Browse Music
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

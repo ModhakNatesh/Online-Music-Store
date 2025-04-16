@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="retro-container animate-fade-in w-100">
+                <h2 class="page-title mb-4">
+                    <i class="fas fa-sign-in-alt me-2"></i> Login
+                </h2>
+                @if (ViewBag.LoginError != null)
+                {
+                    <div class="alert alert-danger border-2 border-dark" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.LoginError
+                    </div>
+                }
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "login-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="mb-4 position-relative">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-user me-2"></i> Username
+                        </label>
+                        <input type="text" name="username" class="form-control form-control-lg border-2 border-dark"
+                               required placeholder="Enter your username" />
+                    </div>
+                    <div class="mb-4 position-relative">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-lock me-2"></i> Password
+                        </label>
+                        <input type="password" name="password" class="form-control form-control-lg border-2 border-dark"
+                               required placeholder="Enter your password" />
+                    </div>
+                    <div class="d-grid gap-2 mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-headphones me-2"></i> Let's Rock
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <p>Don't have an account? <a href="@Url.Action("Register", "Account")" class="text-primary fw-bold">Register Now</a></p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .login-form .form-control {
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 3px 3px 0px var(--dark);
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.85);
+    }
+
+        .login-form .form-control:focus {
+            transform: translate(-3px, -3px);
+            box-shadow: 6px 6px 0px var(--dark);
+            border-color: var(--secondary);
+        }
+
+    .login-form .btn {
+        box-shadow: 5px 5px 0px var(--dark);
+        border: 2px solid var(--dark);
+        transition: all 0.3s ease;
+    }
+
+        .login-form .btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0px var(--dark);
+        }
+
+    /* Additional styling to enhance the login form appearance */
+    .retro-container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+</style>

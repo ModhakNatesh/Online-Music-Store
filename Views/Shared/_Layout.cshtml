@@ -1,0 +1,1024 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Melodify</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=VT323&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <!-- Toastify JS -->
+    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+            --accent-dark: #FFD23F;
+            --retro-purple: #9381FF;
+            --retro-blue: #72DDF7;
+            --retro-pink: #F8A4D8;
+            --retro-orange: #FF8C42;
+            --retro-black: #2E282A;
+            --retro-grid: #1E1E28;
+            --text: #2E282A;
+            --text-muted: #5C5C5C;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            position: relative;
+            background-image: linear-gradient(var(--retro-grid) 1px, transparent 1px), linear-gradient(90deg, var(--retro-grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-color: #F7FFF7;
+            background-position: -1px -1px;
+            background-attachment: fixed;
+        }
+
+            /* Retro Gradient Overlay */
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(180deg, rgba(255, 107, 107, 0.05) 0%, rgba(78, 205, 196, 0.05) 100%);
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            /* Retro Scan Line Effect */
+            body::after {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: repeating-linear-gradient( 0deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 1px, transparent 1px, transparent 2px );
+                pointer-events: none;
+                z-index: 2;
+                opacity: 0.4;
+            }
+
+        .retro-container {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 8px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            background: var(--dark);
+            border-bottom: 4px solid var(--primary);
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .sidebar {
+            background: var(--dark);
+            border-right: 3px solid var(--primary);
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            padding-top: 70px;
+            transition: all 0.3s ease;
+            z-index: 1020;
+            overflow-y: auto;
+        }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1010;
+            display: none;
+        }
+
+        .sidebar-toggle {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            position: absolute;
+            top: 80px;
+            left: 250px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-header {
+            padding: 15px 20px;
+            color: white;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .sidebar-title {
+            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin: 0;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .category-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .category-list li {
+                padding: 12px 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.2s ease;
+            }
+
+                .category-list li:hover {
+                    background: rgba(255, 107, 107, 0.2);
+                }
+
+            .category-list a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                transition: all 0.2s ease;
+            }
+
+                .category-list a:hover {
+                    color: var(--accent);
+                    transform: translateX(5px);
+                }
+
+        .sidebar-footer {
+            padding: 15px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        .navbar-brand {
+            font-family: 'Rubik Mono One', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            color: var(--accent) !important;
+            text-transform: uppercase;
+            font-size: 1.4rem;
+            text-shadow: 2px 2px 0px var(--primary);
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            color: var(--secondary);
+            filter: drop-shadow(2px 2px 0px var(--primary));
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            padding: 1rem 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+            .navbar-dark .navbar-nav .nav-link:hover {
+                color: var(--accent) !important;
+                transform: translateY(-2px);
+            }
+
+        .navbar-dark .navbar-nav .nav-item.active .nav-link {
+            color: var(--accent) !important;
+            background-color: rgba(255, 107, 107, 0.2);
+        }
+
+        .dropdown-menu {
+            background: var(--dark);
+            border: 2px solid var(--primary);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            color: white;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: var(--primary);
+                color: white;
+                transform: translateX(5px);
+            }
+
+            .dropdown-item i {
+                margin-right: 10px;
+                color: var(--secondary);
+            }
+
+        .search-form {
+            position: relative;
+        }
+
+            .search-form .form-control {
+                border-radius: 50px;
+                padding-left: 20px;
+                padding-right: 40px;
+                background: rgba(0, 0, 0, 0.2);
+                border: 2px solid var(--secondary);
+                color: white;
+                font-family: 'Space Grotesk', sans-serif;
+            }
+
+                .search-form .form-control:focus {
+                    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.3);
+                    background: rgba(0, 0, 0, 0.3);
+                }
+
+                .search-form .form-control::placeholder {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+
+            .search-form .btn {
+                position: absolute;
+                right: 5px;
+                top: 0;
+                border-radius: 50%;
+                padding: 8px;
+                background: var(--secondary);
+                border: none;
+                color: var(--dark);
+                transition: all 0.3s ease;
+            }
+
+                .search-form .btn:hover {
+                    background: var(--accent);
+                    transform: scale(1.1);
+                }
+
+        .btn-account {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--retro-blue) 100%);
+            border-radius: 50px;
+            padding: 8px 20px;
+            color: var(--dark) !important;
+            font-weight: 600;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 0px var(--dark);
+        }
+
+            .btn-account:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 5px 5px 0px var(--dark);
+            }
+
+        .user-welcome {
+            color: var(--accent);
+            font-weight: 500;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+            .user-welcome i {
+                margin-right: 8px;
+                color: var(--secondary);
+            }
+
+        .main-content {
+            /* Remove the margin-left: 0; */
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - 200px);
+            padding: 20px;
+            padding-top: 30px;
+            /* Add these properties for proper centering */
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1200px; /* Or whatever maximum width you prefer */
+        }
+
+
+        .page-title {
+            position: relative;
+            margin-bottom: 30px;
+            font-family: 'Rubik Mono One', sans-serif;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+            .page-title::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 5px;
+                background: var(--accent);
+                bottom: -10px;
+                left: 0;
+            }
+
+        /* Product Card Styling */
+        .product-card {
+            background: white;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 8px 8px 0px var(--primary);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            border: 2px solid var(--dark);
+            position: relative;
+        }
+
+            .product-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 12px 12px 0px var(--primary);
+            }
+
+            .product-card .card-img-top {
+                height: 200px;
+                object-fit: cover;
+                border-bottom: 2px solid var(--dark);
+            }
+
+            .product-card .card-body {
+                padding: 20px;
+                background: white;
+            }
+
+            .product-card .card-title {
+                font-weight: 700;
+                color: var(--dark);
+                margin-bottom: 10px;
+                font-size: 1.2rem;
+            }
+
+            .product-card .card-text {
+                color: var(--text-muted);
+                margin-bottom: 15px;
+            }
+
+        .product-price {
+            font-family: 'VT323', monospace;
+            font-size: 1.6rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            transform: rotate(5deg);
+            box-shadow: 2px 2px 0px var(--dark);
+            z-index: 2;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: 2px solid var(--dark);
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 0px var(--dark);
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background: var(--primary);
+                transform: translate(-2px, -2px);
+                box-shadow: 5px 5px 0px var(--dark);
+            }
+
+        .btn-outline-primary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+
+            .btn-outline-primary:hover {
+                background: var(--primary);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+        .btn-wishlist {
+            background: transparent;
+            color: var(--retro-pink);
+            border: none;
+            padding: 8px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 3;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+            .btn-wishlist:hover {
+                transform: scale(1.2);
+                color: var(--primary);
+            }
+
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            position: relative;
+            margin-top: 50px;
+            border-top: 4px solid var(--primary);
+        }
+
+            .footer::before {
+                content: '';
+                position: absolute;
+                top: -20px;
+                left: 0;
+                width: 100%;
+                height: 20px;
+                background: repeating-linear-gradient( 45deg, var(--primary), var(--primary) 20px, var(--secondary) 20px, var(--secondary) 40px );
+            }
+
+        .footer-title {
+            font-family: 'Rubik Mono One', sans-serif;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .footer-links li {
+                margin-bottom: 10px;
+            }
+
+            .footer-links a {
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: all 0.3s ease;
+                display: block;
+                padding: 5px 0;
+            }
+
+                .footer-links a:hover {
+                    color: var(--accent);
+                    transform: translateX(5px);
+                }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+            .social-icons a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                margin-right: 10px;
+                transition: all 0.3s ease;
+                color: white;
+                font-size: 1.2rem;
+                border: 2px solid transparent;
+            }
+
+                .social-icons a:hover {
+                    background: var(--accent);
+                    color: var(--dark);
+                    transform: translateY(-5px);
+                    border-color: var(--dark);
+                }
+
+        .footer-bottom {
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Toast Notification */
+        .toastify {
+            background: linear-gradient(135deg, var(--secondary), var(--retro-blue)) !important;
+            border: 2px solid var(--dark);
+            box-shadow: 5px 5px 0px var(--dark) !important;
+            color: var(--dark) !important;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            border-radius: 8px !important;
+            padding: 16px 20px !important;
+        }
+
+            .toastify .toast-close {
+                color: var(--dark) !important;
+                opacity: 1;
+                font-size: 1.2rem;
+            }
+
+        /* Animation */
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Neon text effect */
+        .neon-text {
+            color: var(--accent);
+            text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 40px var(--accent-dark);
+        }
+
+        /* Vinyl record animation */
+        .vinyl-animation {
+            display: inline-block;
+            animation: spin 10s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @@media (max-width: 992px) {
+            .main-content.sidebar-active {
+                margin-left: 0;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .user-welcome {
+                display: none;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .search-form {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            .footer::before {
+                height: 10px;
+                top: -10px;
+            }
+
+            .product-card .card-img-top {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                <i class="fas fa-compact-disc vinyl-animation logo-icon"></i>
+                Melodify
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <i class="fas fa-home me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Music" && ViewContext.RouteData.Values["Action"].ToString() == "ChartToppers" ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("ChartToppers", "Music")">
+                            <i class="fas fa-chart-line me-1"></i> Charts
+                        </a>
+                    </li>
+                    <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Music" && ViewContext.RouteData.Values["Action"].ToString() == "LatestReleases" ? "active" : "")">
+                        <a class="nav-link" href="@Url.Action("LatestReleases", "Music")">
+                            <i class="fas fa-compact-disc me-1"></i> New Releases
+                        </a>
+                    </li>
+                    @if (Session["UserId"] != null)
+                    {
+                        <li class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Music" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                            <a class="nav-link" href="@Url.Action("Index", "Music")">
+                                <i class="fas fa-store me-1"></i> Shop
+                            </a>
+                        </li>
+                    }
+
+                    @if (Session["Role"]?.ToString() == "Admin")
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-shield me-1"></i> Admin
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Admin")">
+                                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("MusicItems", "Admin")">
+                                        <i class="fas fa-guitar me-2"></i> Music Inventory
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Users", "Admin")">
+                                        <i class="fas fa-users me-2"></i> Users
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Orders", "Admin")">
+                                        <i class="fas fa-clipboard-list me-2"></i> Orders
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Feedbacks", "Admin")">
+                                        <i class="fas fa-comments me-2"></i> Feedbacks
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+
+                @if (Session["UserId"] != null)
+                {
+                    <div class="d-flex align-items-center">
+                        <form class="search-form me-3" action="@Url.Action("Search", "Music")" method="get">
+                            <input class="form-control" type="search" name="query" placeholder="Search music..." required aria-label="Search">
+                            <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+
+                        <div class="user-welcome d-none d-lg-flex me-2">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Hello, @Session["UserName"]</span>
+                        </div>
+
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btn-account" href="#" id="userDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-record-vinyl me-1"></i> My Account
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Profile", "Account")">
+                                        <i class="fas fa-id-card me-2"></i> My Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Cart", "Music")">
+                                        <i class="fas fa-shopping-cart me-2"></i> My Cart
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("OrderHistory", "Music")">
+                                        <i class="fas fa-box me-2"></i> My Orders
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "WishList")">
+                                        <i class="fas fa-heart me-2"></i> Wish List
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "Account")">
+                                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary me-2">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </a>
+                        <a href="@Url.Action("Register", "Account")" class="btn-account">
+                            <i class="fas fa-user-plus me-1"></i> Register
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div id="main-content" class="container main-content animate-fade-in">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h5 class="footer-title">Melodify</h5>
+                    <p class="mb-3">Your retro music destination. Discover vinyl treasures and digital gems from every era.</p>
+                    <div class="social-icons">
+                        <a href="https://github.com/ModhakNatesh"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://github.com/ModhakNatesh"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/ModhakNatesh"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/ModhakNatesh"><i class="fab fa-spotify"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="footer-links">
+                                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                                <li><a href="@Url.Action("ChartToppers", "Music")">Chart Toppers</a></li>
+                                <li><a href="@Url.Action("LatestReleases", "Music")">Latest Releases</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="footer-links">
+                                <li><a href="@Url.Action("AboutUs", "Static")">About Us</a></li>
+                                <li><a href="@Url.Action("ContactUs", "Static")">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p>&copy; @DateTime.Now.Year Melodify. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Animate content on page load
+        const contentElements = document.querySelectorAll('.animate-fade-in');
+        contentElements.forEach(el => {
+            el.classList.add('animate-fade-in');
+        });
+
+        // Add to cart functionality
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const productId = this.getAttribute('data-id');
+                const productName = this.getAttribute('data-name');
+
+                // AJAX call to add item to cart
+                fetch(`@Url.Action("AddToCart", "Music")?id=${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success notification
+                        Toastify({
+                            text: `${productName} added to your cart!`,
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            stopOnFocus: true,
+                            close: true,
+                            className: "toastify",
+                            style: {
+                                background: "linear-gradient(135deg, var(--secondary), var(--retro-blue))",
+                            }
+                        }).showToast();
+
+                        // Optional: Update cart count in navbar if you have one
+                        if (data.cartCount && document.getElementById('cartCount')) {
+                            document.getElementById('cartCount').textContent = data.cartCount;
+                        }
+                    } else {
+                        // Show error notification
+                        Toastify({
+                            text: "Could not add to cart. Please try again.",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            stopOnFocus: true,
+                            close: true,
+                            className: "toastify",
+                            style: {
+                                background: "linear-gradient(135deg, var(--accent), var(--primary))",
+                            }
+                        }).showToast();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Toastify({
+                        text: "An error occurred. Please try again.",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        stopOnFocus: true,
+                        close: true,
+                        className: "toastify",
+                        style: {
+                            background: "linear-gradient(135deg, var(--accent), var(--primary))",
+                        }
+                    }).showToast();
+                });
+            });
+        });
+
+        // Add to wishlist functionality
+        const wishlistButtons = document.querySelectorAll('.btn-wishlist');
+        wishlistButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const productId = this.getAttribute('data-id');
+                const icon = this.querySelector('i');
+
+                // Toggle icon
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+
+                    // AJAX call to add to wishlist
+                    fetch(`@Url.Action("Add", "WishList")?id=${productId}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Toastify({
+                                text: "Added to your wishlist!",
+                                duration: 3000,
+                                gravity: "top",
+                                position: "right",
+                                stopOnFocus: true,
+                                close: true,
+                                className: "toastify"
+                            }).showToast();
+                        }
+                    });
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+
+                    // AJAX call to remove from wishlist
+                    fetch(`@Url.Action("Remove", "WishList")?id=${productId}`, {
+                        method: 'POST'
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Toastify({
+                                text: "Removed from your wishlist!",
+                                duration: 3000,
+                                gravity: "top",
+                                position: "right",
+                                stopOnFocus: true,
+                                close: true,
+                                className: "toastify"
+                            }).showToast();
+                        }
+                    });
+                }
+            });
+        });
+
+        // Current year for footer
+        document.querySelectorAll('.current-year').forEach(el => {
+            el.textContent = new Date().getFullYear();
+        });
+    });
+    </script>
+
+    <!-- Template for product card that can be used across all pages -->
+    <template id="product-card-template">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="product-card">
+                <span class="product-badge">NEW</span>
+                <button class="btn-wishlist" data-id="{productId}">
+                    <i class="far fa-heart"></i>
+                </button>
+                <img src="{imageUrl}" class="card-img-top" alt="{productName}">
+                <div class="card-body">
+                    <h5 class="card-title">{productName}</h5>
+                    <p class="card-text">{artistName}</p>
+                    <span class="product-price">${price}</span>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-primary add-to-cart-btn" data-id="{productId}" data-name="{productName}">
+                            <i class="fas fa-shopping-cart me-1"></i> Add to Cart
+                        </button>
+                        <a href="{detailsUrl}" class="btn btn-outline-primary">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,173 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\OnlineMusicStore\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\music\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\music\\cart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\controllers\\musiccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:controllers\\musiccontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\music\\rate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\music\\rate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\static\\contactus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\static\\contactus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\static\\aboutus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\static\\aboutus.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\music\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\music\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\music\\ordersuccess.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\music\\ordersuccess.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|c:\\onlinemusicstore\\views\\music\\orderhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5B3DBECD-EF9C-4238-B21D-9AE9CFC8BD74}|OnlineMusicStore.csproj|solutionrelative:views\\music\\orderhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MusicController.cs",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Controllers\\MusicController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MusicController.cs",
+              "ToolTip": "C:\\OnlineMusicStore\\Controllers\\MusicController.cs",
+              "RelativeToolTip": "Controllers\\MusicController.cs",
+              "ViewState": "AgIAAMYAAAAAAAAAAAAuwOYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T07:27:08.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Cart.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Music\\Cart.cshtml",
+              "RelativeDocumentMoniker": "Views\\Music\\Cart.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Music\\Cart.cshtml",
+              "RelativeToolTip": "Views\\Music\\Cart.cshtml",
+              "ViewState": "AgIAAAABAAAAAAAAAAAiwA8BAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T07:22:33.15Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ContactUs.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Static\\ContactUs.cshtml",
+              "RelativeDocumentMoniker": "Views\\Static\\ContactUs.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Static\\ContactUs.cshtml",
+              "RelativeToolTip": "Views\\Static\\ContactUs.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T06:35:57.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AboutUs.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Static\\AboutUs.cshtml",
+              "RelativeDocumentMoniker": "Views\\Static\\AboutUs.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Static\\AboutUs.cshtml",
+              "RelativeToolTip": "Views\\Static\\AboutUs.cshtml",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAcwEkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T06:35:44.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Music\\Search.cshtml",
+              "RelativeDocumentMoniker": "Views\\Music\\Search.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Music\\Search.cshtml",
+              "RelativeToolTip": "Views\\Music\\Search.cshtml",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAcwJwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T06:05:04.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Rate.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Music\\Rate.cshtml",
+              "RelativeDocumentMoniker": "Views\\Music\\Rate.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Music\\Rate.cshtml",
+              "RelativeToolTip": "Views\\Music\\Rate.cshtml",
+              "ViewState": "AgIAADUAAAAAAAAAAAAcwLAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T05:59:17.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrderSuccess.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Music\\OrderSuccess.cshtml",
+              "RelativeDocumentMoniker": "Views\\Music\\OrderSuccess.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Music\\OrderSuccess.cshtml",
+              "RelativeToolTip": "Views\\Music\\OrderSuccess.cshtml",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAcwG0AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T05:59:13.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "OrderHistory.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Music\\OrderHistory.cshtml",
+              "RelativeDocumentMoniker": "Views\\Music\\OrderHistory.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Music\\OrderHistory.cshtml",
+              "RelativeToolTip": "Views\\Music\\OrderHistory.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAcwHIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T05:59:12.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\OnlineMusicStore\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\OnlineMusicStore\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T04:53:23.678Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

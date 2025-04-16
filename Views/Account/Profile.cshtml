@@ -1,0 +1,184 @@
+﻿@model OnlineMusicStore.Models.User
+@{
+    ViewBag.Title = "My Profile";
+}
+
+<div class="retro-container animate-fade-in">
+    <h2 class="page-title mb-4">
+        <i class="fas fa-user-circle me-2"></i> My Profile
+    </h2>
+
+    @if (TempData["ProfileSuccess"] != null)
+    {
+        <div class="alert border-2 border-dark" style="background-color: var(--secondary); color: var(--dark);" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["ProfileSuccess"]
+        </div>
+    }
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "profile-form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="retro-card mb-4">
+                    <div class="retro-card-header">
+                        <i class="fas fa-id-card me-2"></i> Account Information
+                    </div>
+                    <div class="retro-card-body">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Username, new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control border-2 border-dark", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.FullName, new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control border-2 border-dark", placeholder = "Your full name" })
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Email, new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control border-2 border-dark", type = "email", placeholder = "Your email" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="retro-card mb-4">
+                    <div class="retro-card-header">
+                        <i class="fas fa-map-marker-alt me-2"></i> Shipping Details
+                    </div>
+                    <div class="retro-card-body">
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.Address, new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control border-2 border-dark", rows = "3", placeholder = "Your shipping address" })
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            @Html.LabelFor(m => m.CreditCard, new { @class = "form-label fw-bold" })
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                                @Html.TextBoxFor(m => m.CreditCard, new { @class = "form-control border-2 border-dark", placeholder = "Your card number" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="retro-card mb-4">
+            <div class="retro-card-header">
+                <i class="fas fa-key me-2"></i> Change Password (Optional)
+            </div>
+            <div class="retro-card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Old Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" name="oldPassword" class="form-control border-2 border-dark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">New Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                <input type="password" name="newPassword" class="form-control border-2 border-dark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Confirm Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-check-circle"></i></span>
+                                <input type="password" name="confirmPassword" class="form-control border-2 border-dark" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i> Update Profile
+            </button>
+        </div>
+    }
+</div>
+
+<style>
+    .retro-card {
+        background-color: white;
+        border: 2px solid var(--dark);
+        border-radius: 8px;
+        box-shadow: 6px 6px 0 var(--primary);
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .retro-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 var(--primary);
+        }
+
+    .retro-card-header {
+        background-color: var(--dark);
+        color: var(--accent);
+        padding: 15px 20px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-bottom: 2px solid var(--primary);
+    }
+
+    .retro-card-body {
+        padding: 20px;
+    }
+
+    .profile-form .form-control {
+        padding: 10px 15px;
+        border-radius: 6px;
+        box-shadow: 2px 2px 0px var(--dark);
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.85);
+    }
+
+        .profile-form .form-control:focus {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px var(--dark);
+            border-color: var(--secondary);
+        }
+
+    .profile-form .input-group-text {
+        background-color: var(--secondary);
+        color: var(--dark);
+        border: 2px solid var(--dark);
+        border-right: none;
+        font-weight: 600;
+    }
+
+    .profile-form .btn {
+        box-shadow: 4px 4px 0px var(--dark);
+        border: 2px solid var(--dark);
+        transition: all 0.3s ease;
+    }
+
+        .profile-form .btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark);
+        }
+</style>
