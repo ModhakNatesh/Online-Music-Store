@@ -1,9 +1,9 @@
 # 🎶 Online Music Store 🎧  
 A full-featured music shopping web app built with **ASP.NET MVC 5**, **SQL Server**, and **Bootstrap 5**.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/online-music-store?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/online-music-store?style=flat-square)
-![License](https://img.shields.io/github/license/yourusername/online-music-store?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/ModhakNatesh/online-music-store?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/ModhakNatesh/online-music-store?style=flat-square)
+![License](https://img.shields.io/github/license/ModhakNatesh/online-music-store?style=flat-square)
 
 ---
 
